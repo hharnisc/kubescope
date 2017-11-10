@@ -1,0 +1,30 @@
+{
+  "name": "kube-stats",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "d3-scale": "^1.0.6",
+    "d3-selection": "^1.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "micro": "^9.0.0",
+    "microrouter": "^3.0.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.14"
+  },
+  "scripts": {
+    "start:dev:client": "react-scripts start",
+    "start:dev:server": "nodemon --watch server/ --exec 'micro server/ -p 4000'",
+    "start:dev": "concurrently \"yarn run start:dev:server\" \"yarn run start:dev:client\"",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:4000",
+  "devDependencies": {
+    "concurrently": "3.5.0",
+    "nodemon": "1.12.1"
+  }
+}
