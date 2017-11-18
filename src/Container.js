@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
+import { Link } from 'react-router-dom';
 
 export default class Containers extends Component {
   constructor({ match }) {
     super();
     this.state = {
+      alive: true,
       containerData: []
     };
   }
@@ -21,11 +23,19 @@ export default class Containers extends Component {
 
   componentDidMount() {
     const containerId = this.props.match.params.containerId;
-    this.intervalId = setInterval(() => {
-      fetch(`/api/containers/${containerId}/`)
-       .then(response => response.json())
-       .then(data => this.appendContainerData({ data }));
-    }, 1000);
+    const updateData = () => fetch(`/api/containers/${containerId}/`)
+     .then(response => response.json())
+     .then(data => {
+       if (!data.alive) {
+         this.setState({
+           alive: false,
+         })
+       } else {
+        this.appendContainerData({ data });
+       }
+     });
+    this.intervalId = setInterval(updateData, 5000);
+    updateData();
   }
 
   componentWillUnmount() {
@@ -33,34 +43,57 @@ export default class Containers extends Component {
   }
 
   render() {
-    const data = {
-      labels: this.state.containerData.map((data) => new Date(data.timestamp)),
-      datasets: [
-        {
-          label: 'My First dataset',
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: 'rgba(75,192,192,0.4)',
-          borderColor: 'rgba(75,192,192,1)',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: 'rgba(75,192,192,1)',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: this.state.containerData.map((data) => data.usage.cpu),
-        }
-      ]
-    };
-    return (
-      <Line data={data} width="600" height="250"/>
-    );
+    if (this.state.alive) {
+      const data = {
+        labels: this.state.containerData.map((data) => new Date(data.timestamp)),
+        datasets: [
+          {
+            label: 'CPU',
+            borderColor: 'rgba(0, 0, 255, 1.0)',
+            backgroundColor: 'rgba(0, 0, 255, 1.0)',
+            data: this.state.containerData.map((data) => data.usage.cpu),
+          },
+          {
+            label: 'CPU Limit',
+            fill: false,
+            borderColor: 'rgba(255, 0, 0, 1.0)',
+            backgroundColor: 'rgba(255, 0, 0, 1.0)',
+            data: this.state.containerData.map((data) => data.spec.cpu.limit),
+          },
+        ]
+      };
+      const memoryData = {
+        labels: this.state.containerData.map((data) => new Date(data.timestamp)),
+        datasets: [
+          {
+            label: 'Memory',
+            borderColor: 'rgba(0, 0, 255, 1.0)',
+            backgroundColor: 'rgba(0, 0, 255, 1.0)',
+            data: this.state.containerData.map((data) => data.usage.memory),
+          },
+          {
+            label: 'Memory Limit',
+            fill: false,
+            borderColor: 'rgba(255, 0, 0, 1.0)',
+            backgroundColor: 'rgba(255, 0, 0, 1.0)',
+            data: this.state.containerData.map((data) => data.spec.memory.limit),
+          },
+        ]
+      };
+      return (
+        <div>
+          <Link to={`/`}>Back To Containers</Link>
+          <Line data={data} width={600} height={250} />
+          <Line data={memoryData} width={600} height={250} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div>Container has died :(</div>
+          <Link to={`/`}>Back To Containers</Link>
+        </div>
+      );
+    }
   }
 }

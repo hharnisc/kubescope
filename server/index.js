@@ -40,17 +40,21 @@ const containers = async (req, res) => {
 };
 
 const container = async (req, res) => {
-  // return send(res, 200, {"usage":{"cpu":3,"memory":17526784},"limits":{},"spec":{"cpu":{"limit":102,"max_limit":0,"mask":"0"},"memory":{"limit":9223372036854772000,"reservation":9223372036854772000,"swap_limit":9223372036854772000}}});
   const summaryResponse = await fetch(`http://localhost:3002/api/v2.0/summary/${decodeURIComponent(req.params.containerId)}`);
   const specResponse = await fetch(`http://localhost:3002/api/v2.0/spec/${decodeURIComponent(req.params.containerId)}`);
-  const summary = await summaryResponse.json();
-  const spec = await specResponse.json();
-  console.log('summary', summary);
-  send(res, 200, {
-    usage: parseSummaryUsage({ summary }),
-    spec: parseSpecLimits({ spec }),
-    timestamp: parseTimestamp({ summary }),
-  });
+  const response = {
+    alive: true,
+  };
+  try {
+    const summary = await summaryResponse.json();
+    const spec = await specResponse.json();
+    response.usage = parseSummaryUsage({ summary });
+    response.spec = parseSpecLimits({ spec });
+    response.timestamp = parseTimestamp({ summary });
+  } catch (e) {
+    response.alive = false;
+  }
+  send(res, 200, response);
 };
 
 const notfound = (req, res) => send(res, 404, 'Not found route');
