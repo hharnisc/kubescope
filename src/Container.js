@@ -7,21 +7,7 @@ export default class Containers extends Component {
     super();
     this.state = {
       alive: true,
-      containerData: Array.apply(null, Array(10)).map(() => ({
-        timestamp: new Date(),
-        usage: {
-          cpu: null,
-          memory: null,
-        },
-        spec: {
-          cpu:{
-            limit: null,
-          },
-          memory: {
-            limit: null,
-          },
-        },
-      })),
+      containerData: [],
     };
   }
 
@@ -58,7 +44,7 @@ export default class Containers extends Component {
 
   render() {
     if (this.state.alive) {
-      const data = {
+      const cpuData = {
         labels: this.state.containerData.map((data) => new Date(data.timestamp)),
         datasets: [
           {
@@ -83,14 +69,14 @@ export default class Containers extends Component {
             label: 'Memory',
             borderColor: 'rgba(0, 0, 255, 1.0)',
             backgroundColor: 'rgba(0, 0, 255, 1.0)',
-            data: this.state.containerData.map((data) => data.usage.memory),
+            data: this.state.containerData.map((data) => (data.usage.memory / 1024 / 1024)),
           },
           {
             label: 'Memory Limit',
             fill: false,
             borderColor: 'rgba(255, 0, 0, 1.0)',
             backgroundColor: 'rgba(255, 0, 0, 1.0)',
-            data: this.state.containerData.map((data) => data.spec.memory.limit),
+            data: this.state.containerData.map((data) => (data.spec.memory.limit / 1024 / 1024)),
           },
         ]
       };
@@ -109,6 +95,32 @@ export default class Containers extends Component {
           }]
         }
       };
+      const memoryOptions = {
+        ...options,
+        scales: {
+          ...options.scales,
+          yAxes: [{
+            ticks: {
+              callback: (value) => `${value} MB`,
+              beginAtZero: true,
+            }
+          }]
+        }
+      };
+
+      const cpuOptions = {
+        ...options,
+        scales: {
+          ...options.scales,
+          yAxes: [{
+            ticks: {
+              callback: (value) => `${value}m`,
+              beginAtZero: true,
+            }
+          }]
+        }
+      };
+      console.log('memoryData', memoryData);
       return (
         <div>
           <Link to={`/`}>Back To Containers</Link>
@@ -125,8 +137,8 @@ export default class Containers extends Component {
               }}
             >
               <Line
-                data={data}
-                options={options}
+                data={cpuData}
+                options={cpuOptions}
                 width={600}
                 height={250}
               />
@@ -139,7 +151,7 @@ export default class Containers extends Component {
             >
               <Line
                 data={memoryData}
-                options={options}
+                options={memoryOptions}
                 width={600}
                 height={250}
               />
