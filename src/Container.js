@@ -84,6 +84,11 @@ export default class Containers extends Component {
         animation: {
           duration: 0,
         },
+        elements: {
+          line: {
+            tension: 0,
+          }
+        },
         scales: {
           xAxes: [{
             type: 'time',
