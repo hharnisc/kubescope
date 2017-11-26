@@ -148,6 +148,7 @@ export default class Containers extends Component {
                 minWidth: 600,
               }}
             >
+              <h3>CPU</h3>
               <Line
                 data={cpuData}
                 options={cpuOptions}
@@ -161,6 +162,7 @@ export default class Containers extends Component {
                 minWidth: 600,
               }}
             >
+              <h3>Memory</h3>
               <Line
                 data={memoryData}
                 options={memoryOptions}
