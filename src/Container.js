@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { parse } from 'qs';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 
 export default class Containers extends Component {
-  constructor({ match }) {
+  constructor({
+    match,
+    location,
+  }) {
     super();
     this.state = {
       alive: true,
@@ -43,6 +47,8 @@ export default class Containers extends Component {
   }
 
   render() {
+    const { container } = parse(this.props.location.search.substr(1));
+    const containerId = decodeURIComponent(this.props.match.params.containerId);
     if (this.state.alive) {
       const cpuData = {
         labels: this.state.containerData.map((data) => new Date(data.timestamp)),
@@ -127,6 +133,8 @@ export default class Containers extends Component {
       };
       return (
         <div>
+          <h1>{container}</h1>
+          <h3>{containerId}</h3>
           <Link to={`/`}>Back To Containers</Link>
           <div
             style={{
@@ -166,6 +174,8 @@ export default class Containers extends Component {
     } else {
       return (
         <div>
+          <h1>{container}</h1>
+          <h3>{containerId}</h3>
           <div>Container has died :(</div>
           <Link to={`/`}>Back To Containers</Link>
         </div>

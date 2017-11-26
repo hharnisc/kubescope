@@ -16,10 +16,14 @@ export default class Containers extends Component {
      .then(containers => this.setState({ containers }));
   }
 
-  renderPods({ pods }) {
+  renderPods({ container, pods }) {
     return pods.map((pod) =>
       <li key={pod}>
-        <Link to={`/containers/${encodeURIComponent(pod)}/`}>{pod}</Link>
+        <Link
+          to={`/containers/${encodeURIComponent(pod)}/?container=${container}`}
+        >
+          {pod}
+        </Link>
       </li>);
   }
 
@@ -28,7 +32,10 @@ export default class Containers extends Component {
       <li>
         <ul>
           <div>{container}</div>
-          {this.renderPods({ pods: this.state.containers[container] })}
+          {this.renderPods({
+            pods: this.state.containers[container],
+            container
+          })}
         </ul>
       </li>
     );

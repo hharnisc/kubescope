@@ -7,6 +7,7 @@
     "isomorphic-fetch": "^2.2.1",
     "micro": "^9.0.0",
     "microrouter": "^3.0.0",
+    "qs": "^6.5.1",
     "react": "^16.0.0",
     "react-chartjs-2": "^2.6.4",
     "react-dom": "^16.0.0",
