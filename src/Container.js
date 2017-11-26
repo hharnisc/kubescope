@@ -55,15 +55,15 @@ export default class Containers extends Component {
         datasets: [
           {
             label: 'CPU',
-            borderColor: 'rgba(0, 0, 255, 1.0)',
-            backgroundColor: 'rgba(0, 0, 255, 1.0)',
+            borderColor: 'rgba(54, 162, 235, 1.0)',
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
             data: this.state.containerData.map((data) => data.usage.cpu),
           },
           {
             label: 'CPU Limit',
             fill: false,
-            borderColor: 'rgba(255, 0, 0, 1.0)',
-            backgroundColor: 'rgba(255, 0, 0, 1.0)',
+            borderColor: 'rgba(242, 113, 115, 1.0)',
+            backgroundColor: 'rgba(242, 113, 115, 0.7)',
             data: this.state.containerData.map((data) => data.spec.cpu.limit),
           },
         ]
@@ -73,15 +73,15 @@ export default class Containers extends Component {
         datasets: [
           {
             label: 'Memory',
-            borderColor: 'rgba(0, 0, 255, 1.0)',
-            backgroundColor: 'rgba(0, 0, 255, 1.0)',
+            borderColor: 'rgba(54, 162, 235, 1.0)',
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
             data: this.state.containerData.map((data) => (data.usage.memory / 1024 / 1024)),
           },
           {
             label: 'Memory Limit',
             fill: false,
-            borderColor: 'rgba(255, 0, 0, 1.0)',
-            backgroundColor: 'rgba(255, 0, 0, 1.0)',
+            borderColor: 'rgba(242, 113, 115, 1.0)',
+            backgroundColor: 'rgba(242, 113, 115, 0.7)',
             data: this.state.containerData.map((data) => (data.spec.memory.limit / 1024 / 1024)),
           },
         ]
