@@ -125,7 +125,6 @@ export default class Containers extends Component {
           }]
         }
       };
-      console.log('memoryData', memoryData);
       return (
         <div>
           <Link to={`/`}>Back To Containers</Link>
