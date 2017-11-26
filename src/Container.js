@@ -7,7 +7,21 @@ export default class Containers extends Component {
     super();
     this.state = {
       alive: true,
-      containerData: []
+      containerData: Array.apply(null, Array(10)).map(() => ({
+        timestamp: new Date(),
+        usage: {
+          cpu: null,
+          memory: null,
+        },
+        spec: {
+          cpu:{
+            limit: null,
+          },
+          memory: {
+            limit: null,
+          },
+        },
+      })),
     };
   }
 
@@ -80,11 +94,57 @@ export default class Containers extends Component {
           },
         ]
       };
+      const options = {
+        animation: {
+          duration: 0,
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              displayFormats: {
+                second: 'mm:ss',
+              }
+            }
+          }]
+        }
+      };
       return (
         <div>
           <Link to={`/`}>Back To Containers</Link>
-          <Line data={data} width={600} height={250} />
-          <Line data={memoryData} width={600} height={250} />
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+            }}
+          >
+            <div
+              style={{
+                flex: 1,
+                minWidth: 600,
+              }}
+            >
+              <Line
+                data={data}
+                options={options}
+                width={600}
+                height={250}
+              />
+            </div>
+            <div
+              style={{
+                flex: 1,
+                minWidth: 600,
+              }}
+            >
+              <Line
+                data={memoryData}
+                options={options}
+                width={600}
+                height={250}
+              />
+            </div>
+          </div>
         </div>
       );
     } else {
