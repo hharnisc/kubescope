@@ -174,6 +174,7 @@ export default class Containers extends Component {
         </div>
       );
     } else {
+      // TODO: keep displaying graph data if it exists and stop polling
       return (
         <div>
           <h1>{container}</h1>

@@ -56,6 +56,7 @@ export default class Containers extends Component {
     return (
       <div>
         {Object.keys(this.state.containers)
+          .sort()
           .map((container) =>
             <ul
               key={container}
