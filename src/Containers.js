@@ -39,6 +39,7 @@ export default class Containers extends Component {
           key={container}
           style={{
             listStyleType: 'none',
+            padding: 0,
           }}
         >
           <div><h2>{container}</h2></div>
@@ -60,6 +61,7 @@ export default class Containers extends Component {
               key={container}
               style={{
                 listStyleType: 'none',
+                padding: 0,
               }}
             >
               {this.renderContainer({ container })}
