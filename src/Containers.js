@@ -18,7 +18,12 @@ export default class Containers extends Component {
 
   renderPods({ container, pods }) {
     return pods.map((pod) =>
-      <li key={pod}>
+      <li
+        key={pod}
+        style={{
+          marginTop: '1rem',
+        }}
+      >
         <Link
           to={`/containers/${encodeURIComponent(pod)}/?container=${container}`}
         >
@@ -30,8 +35,13 @@ export default class Containers extends Component {
   renderContainer({ container }) {
     return (
       <li>
-        <ul>
-          <div>{container}</div>
+        <ul
+          key={container}
+          style={{
+            listStyleType: 'none',
+          }}
+        >
+          <div><h2>{container}</h2></div>
           {this.renderPods({
             pods: this.state.containers[container],
             container
@@ -42,7 +52,19 @@ export default class Containers extends Component {
   }
 
   render() {
-    return Object.keys(this.state.containers)
-      .map((container) => <ul key={container}>{this.renderContainer({ container })}</ul>);
+    return (
+      <div>
+        {Object.keys(this.state.containers)
+          .map((container) =>
+            <ul
+              key={container}
+              style={{
+                listStyleType: 'none',
+              }}
+            >
+              {this.renderContainer({ container })}
+            </ul>)}
+      </div>
+    );
   }
 }
