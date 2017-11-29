@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.7.1",
-    "fs-router": "^0.4.0",
     "isomorphic-fetch": "^2.2.1",
     "micro": "^9.0.0",
     "microrouter": "^3.0.0",

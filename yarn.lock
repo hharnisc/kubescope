@@ -2825,10 +2825,6 @@ fs-extra@^0.30.0:
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
 
-fs-router@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/fs-router/-/fs-router-0.4.0.tgz#a721deaad27b76b26cc7bba6184e331f995c838b"
-
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
