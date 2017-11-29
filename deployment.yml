@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: kube-scope
+  labels:
+    app: kube-scope
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-scope
+  template:
+    metadata:
+      labels:
+        app: kube-scope
+    spec:
+      containers:
+      - name: kube-scope
+        image: hharnisc/kube-scope:beta03
+        ports:
+        - containerPort: 3000
+        env:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP

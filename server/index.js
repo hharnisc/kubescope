@@ -10,6 +10,11 @@ const { router, get } = require('microrouter');
 const readFile = util.promisify(fs.readFile);
 const exists = util.promisify(fs.exists);
 
+const cadvisorHost =
+  process.env.NODE_ENV === 'production' ?
+  `http://${process.env.HOST_IP}:4194` :
+  'http://localhost:3002'; // port forward a proxy to cadvisor (hharnisc/host-proxy:beta02)
+
 const parseContainers = dockerData => {
   const containerMap = {};
   Object.keys(dockerData)
@@ -41,14 +46,14 @@ const parseTimestamp = ({ summary }) =>
     .reduce((_, key) => summary[key].timestamp, {});
 
 const containers = async (req, res) => {
-  const response = await fetch('http://localhost:3002/api/v1.3/docker/');
+  const response = await fetch(`${cadvisorHost}/api/v1.3/docker/`);
   const data = await response.json();
   send(res, 200, parseContainers(data));
 };
 
 const container = async (req, res) => {
-  const summaryResponse = await fetch(`http://localhost:3002/api/v2.0/summary/${decodeURIComponent(req.params.containerId)}`);
-  const specResponse = await fetch(`http://localhost:3002/api/v2.0/spec/${decodeURIComponent(req.params.containerId)}`);
+  const summaryResponse = await fetch(`${cadvisorHost}/api/v2.0/summary/${decodeURIComponent(req.params.containerId)}`);
+  const specResponse = await fetch(`${cadvisorHost}/api/v2.0/spec/${decodeURIComponent(req.params.containerId)}`);
   const response = {
     alive: true,
   };
