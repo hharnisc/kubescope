@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: kube-scope
-        image: hharnisc/kube-scope:beta03
+        image: hharnisc/kube-scope:b8d16fab8c41ecd69895b6ab0336e1e2670d2b0b
         ports:
         - containerPort: 3000
         env:
