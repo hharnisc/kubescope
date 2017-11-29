@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.7.1",
+    "fs-router": "^0.4.0",
     "isomorphic-fetch": "^2.2.1",
     "micro": "^9.0.0",
     "microrouter": "^3.0.0",
+    "mime": "^2.0.3",
     "qs": "^6.5.1",
     "react": "^16.0.0",
     "react-chartjs-2": "^2.6.4",
@@ -18,7 +20,7 @@
     "start:dev:client": "react-scripts start",
     "start:dev:server": "nodemon --watch server/ --exec 'micro server/ -p 4000'",
     "start:dev": "concurrently \"yarn run start:dev:server\" \"yarn run start:dev:client\"",
-    "start": "react-scripts start",
+    "start": "micro server/",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

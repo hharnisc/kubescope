@@ -1,7 +1,14 @@
+const url = require('url');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+const util = require('util');
 const fetch = require('isomorphic-fetch');
 const { send } = require('micro');
 const { router, get } = require('microrouter');
-const dockerData = require('./docker.json');
+
+const readFile = util.promisify(fs.readFile);
+const exists = util.promisify(fs.exists);
 
 const parseContainers = dockerData => {
   const containerMap = {};
@@ -57,10 +64,35 @@ const container = async (req, res) => {
   send(res, 200, response);
 };
 
-const notfound = (req, res) => send(res, 404, 'Not found route');
+const main = async (req, res) => {
+  const parseUrl = url.parse(req.url);
+  const root = `${__dirname}/../build`;
+  let file = `${root}${parseUrl.pathname}`;
+
+  if (!await exists(file)) {
+    file = root;
+  }
+
+  if (fs.statSync(file).isDirectory()) {
+    file += '/index.html';
+  }
+
+  if (!await exists(file)) {
+    send(res, 404, {error: 'index.html not found'});
+    return;
+  }
+
+  try {
+    const data = await readFile(file);
+    res.setHeader('Content-type', mime.getType(file));
+    send(res, 200, data);
+  } catch (err) {
+    send(res, 500);
+  }
+};
 
 module.exports = router(
   get('/api/containers/:containerId/', container),
   get('/api/containers/', containers),
-  get('/*', notfound)
+  get('/*', main),
 )
