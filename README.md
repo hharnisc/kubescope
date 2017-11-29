@@ -2,7 +2,7 @@
 
 A microscope for Kubernetes deployments
 
-![KubeScope](https://raw.githubusercontent.com/hharnisc/kubescope/master/kube-scope.png)
+![KubeScope](https://github.com/hharnisc/kubescope/raw/master/kube-scope.png)
 
 ## Quickstart
 
