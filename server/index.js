@@ -19,7 +19,7 @@ const parseContainers = dockerData => {
   const containerMap = {};
   Object.keys(dockerData)
     .forEach((dockerKey) => {
-      const containerName = dockerData[dockerKey].labels['io.kubernetes.container.name'];
+      const containerName = dockerData[dockerKey].spec.image;
       if (containerName in containerMap) {
         containerMap[containerName].push(dockerData[dockerKey].name);
       } else {
