@@ -25,4 +25,4 @@ spec:
             fieldRef:
               fieldPath: status.hostIP
         - name: HOST_CADVISOR_PORT
-          value: 4194
+          value: "4194"
