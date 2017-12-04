@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: kube-scope
@@ -24,3 +24,5 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
+        - name: HOST_CADVISOR_PORT
+          value: 4194

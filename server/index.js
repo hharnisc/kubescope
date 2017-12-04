@@ -12,7 +12,7 @@ const exists = util.promisify(fs.exists);
 
 const cadvisorHost =
   process.env.NODE_ENV === 'production' ?
-  `http://${process.env.HOST_IP}:4194` :
+  `http://${process.env.HOST_IP}:${process.env.HOST_CADVISOR_PORT}` :
   'http://localhost:3002'; // port forward a proxy to cadvisor (hharnisc/host-proxy:beta02)
 
 const parseContainers = dockerData => {
