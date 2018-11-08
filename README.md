@@ -1,10 +1,10 @@
 # KubeScope 🔬
 
+_NOTE:_ Now there is command line version of Kubescope with metrics updated every second: https://github.com/hharnisc/kubescope-cli
+
 A microscope for Kubernetes deployments
 
 ![KubeScope](https://github.com/hharnisc/kubescope/raw/master/kube-scope.png)
-
-_NOTE:_ Now there is command line version of Kubescope with metrics updated every second: https://github.com/hharnisc/kubescope-cli
 
 ## Quickstart
 
